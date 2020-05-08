@@ -9,7 +9,7 @@
 #define HASHMAP_HPP_
 
 
-#include "hashNode.hpp"
+#include "HashNode.hpp"
 
 class hashMap {
 	friend class makeSeuss;

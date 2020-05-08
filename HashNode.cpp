@@ -8,7 +8,7 @@
 
 
 
-#include "hashMap.hpp"
+#include "HashMap.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
@@ -40,6 +40,10 @@ hashNode::hashNode(string s, string v){
 void hashNode::addValue(string v) {
 	// adding a valu to the end of the value array associated 
 	// with a key
+	currSize++;
+	values[currSize-1] = v;
+
+	if(currSize > valuesSize/2)dblArray();
 }
 void hashNode::dblArray() {
 	// when the value array gets full, you need to make a new 
@@ -48,6 +52,13 @@ void hashNode::dblArray() {
 	//to the new values, then de-allocate the old array.  
 	//Again, just copying over, no hash functiosn involved 
 	//here.
+	valuesSize *= 2;
+	string newValues[valuesSize];
+	for(int i = 0; i < currSize; i++){
+		newValues[i] = values[i];
+	}
+	delete []values;
+	values = newValues;
 }
 
 string hashNode::getRandValue() {
@@ -56,4 +67,5 @@ string hashNode::getRandValue() {
 	//randomly select one of those words and return it.  That 
 	//will be the word that follows your key in your output 
 	//function, and it will also be the next key.
+	return values[rand() % currSize];
 }

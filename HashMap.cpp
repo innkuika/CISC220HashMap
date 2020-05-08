@@ -6,8 +6,8 @@
  */
 
 
-#include "hashMap.hpp"
-#include "hashNode.hpp"
+#include "HashMap.hpp"
+#include "HashNode.hpp"
 #include <iostream>
 #include <math.h>
 using namespace std;

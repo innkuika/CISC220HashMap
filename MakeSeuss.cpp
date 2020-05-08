@@ -5,8 +5,8 @@
  *      Author: 13027
  */
 
-#include "makeSeuss.hpp"
-#include "hashMap.hpp"
+#include "MakeSeuss.hpp"
+#include "HashMap.hpp"
 
 #include <iostream>
 #include <stdlib.h>

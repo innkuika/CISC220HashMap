@@ -7,7 +7,7 @@
 
 
 #include <iostream>
-#include "makeSeuss.hpp"
+#include "MakeSeuss.hpp"
 #include <time.h>
 #include <stdlib.h>
 
