@@ -20,6 +20,7 @@ class hashMap {
 			//want to have to delete every hash Node and 
 			//then create a new one when I rehashed the 
 			//array.
+	int **test;
 	string first; // for first keyword for printing to a file
 	int numKeys;  // Number of keys currently in the hashMap
 	int mapSize;  // total size of the hashMap array
