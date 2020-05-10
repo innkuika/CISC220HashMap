@@ -56,6 +56,9 @@ void hashMap::addKeyValue(string k, string v) {
 
 }
 int hashMap::getIndex(string k) {
+	//pass for now
+	//will come back and implement
+	return -1099;
 }
 
 int hashMap::calcHash1(string k){
@@ -70,17 +73,50 @@ int hashMap::calcHash2(string k){
 		}
 	return h % mapSize;
 }
+
+bool isPrime(int n)  
+{   
+    if (n == 1)  return false; 
+
+    for (int i=2; i < n; i++)  
+        if (n%i == 0)  
+           return false;  
+
+    return true;  
+}  
 void hashMap::getClosestPrime() {
-	
+    while (true) { 
+        mapSize++; 
+        if (isPrime(mapSize)) break;
+    } 
+
 }
 void hashMap::reHash() {
+	int oldMapSize = mapSize;
+	hashNode **oldMap = map;
+	getClosestPrime();
+	hashNode *newMap = new hashNode[mapSize];
+	map = & newMap;
+	for(int i = 0; i < oldMapSize; i++){
+		for(int j = 0; j < oldMap[i]->currSize; j++){
+			addKeyValue(oldMap[i]->keyword, oldMap[i]->values[j]);
+		}
+	}
 }
 int hashMap::coll1(int h, int i, string k) {
+
 }
 int hashMap::coll2(int h, int i, string k) {
 }
 int hashMap::findKey(string k) {
 //NOTE: THIS METHOD CANNOT LOOP from index 0 to end of hash array looking for the key.  That destroys any efficiency in run-time. 
+int index = hashfn? calcHash1(k) : calcHash2(k);
+int ct = 0;
+while(map[index]->keyword != k){
+	if(map[index] == NULL) return -1;
+	index = collfn ? coll1(index, ct, k) : coll2(index, ct, k);
+}
+return index;
 }
 
 
