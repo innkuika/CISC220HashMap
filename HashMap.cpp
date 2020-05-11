@@ -43,14 +43,14 @@ void hashMap::addKeyValue(string k, string v)
 	{
 		if (nodeAtIndex == NULL)
 		{
-			cout << "here6" << endl;
+			// cout << "here6" << endl;
 			map[index] = new hashNode(k);
 			map[index]->addValue(v);
 			break;
 		}
 		else if (nodeAtIndex->keyword == k)
 		{
-			cout << "here7" << endl;
+			// cout << "here7" << endl;
 			map[index]->addValue(v);
 			break;
 		}
@@ -61,16 +61,17 @@ void hashMap::addKeyValue(string k, string v)
 	}
 	collisions += ct - 1;
 
-	cout << "here5" << endl;
-	cout << "hash index: " << index << endl;
-	cout << "numKeys: " << numKeys<< endl;
-	cout << "mapSize: " << mapSize << endl;
+	// cout << "here5" << endl;
+	// cout << "hash index: " << index << endl;
+	// cout << "numKeys: " << numKeys<< endl;
+	// cout << "mapSize: " << mapSize << endl;
+	cout << k << ": " << v << endl;
 
 	numKeys++;
-	cout<<"load factor"<<numKeys/mapSize<<endl;
+	// cout<<"load factor"<<((float)numKeys / (float)mapSize)<<endl;
 	if (((float)numKeys / (float)mapSize) > 0.7)
 		reHash();
-	cout << "here10" << endl;
+	// cout << "here10" << endl;
 }
 int hashMap::getIndex(string k)
 {
@@ -108,6 +109,7 @@ bool isPrime(int n)
 }
 void hashMap::getClosestPrime()
 {
+	mapSize *= 2;
 	while (true)
 	{
 		mapSize++;
@@ -145,9 +147,9 @@ void hashMap::reHash()
 }
 int hashMap::coll1(int h, int i, string k)
 {
-	cout << "inside coll1" << endl;
-	cout << "h:"<<h << endl;
-	cout << "i:"<<i << endl;
+	// cout << "inside coll1" << endl;
+	// cout << "h:"<<h << endl;
+	// cout << "i:"<<i << endl;
 	return (h + i) % mapSize;
 }
 int hashMap::coll2(int h, int i, string k)
