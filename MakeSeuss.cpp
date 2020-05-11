@@ -24,25 +24,25 @@ makeSeuss::makeSeuss(string f1,string f2,bool hash1, bool coll1) {
 	writeFile();
 }
 void makeSeuss::readFile() {
-	ifstream infile(fn.c_str(),ios::in);     // open file
-	string key = "";
-	string value="";
-	infile>> key;
+     ifstream infile(fn.c_str(),ios::in);     // open file
+     string key = "";
+     string value="";
+     infile>> key;
 
-	infile >> key;
-	ht->first = key;
+     infile >> key;
+     ht->first = key;
 
-	while (infile >> value) {          // loop getting single characters
-		cout << key <<": " << value << endl;
-		ht->addKeyValue(key,value);
-		key = value;
-		value = "";
-	}
-	ht->addKeyValue(key,value);
-	cout << endl;
-	infile.close();
+     while (infile >> value) {          // loop getting single characters
+       cout << key <<": " << value << endl;
+      ht->addKeyValue(key,value);
+         key = value;
+         value = "";
+     }
+     ht->addKeyValue(key,value);
+     cout << endl;
+     infile.close();
 
-	ht->printMap();
+     ht->printMap();
 }
 void makeSeuss::writeFile() {
 	ofstream outfile(newfile.c_str(),ios::out);
