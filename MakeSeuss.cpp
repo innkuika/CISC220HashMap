@@ -22,7 +22,7 @@ makeSeuss::makeSeuss(string f1, string f2, bool hash1, bool coll1)
 	fn = f1;
 
 	readFile();
-	// writeFile();
+	writeFile();
 }
 void makeSeuss::readFile()
 {
@@ -48,10 +48,12 @@ void makeSeuss::readFile()
 	ht->printMap();
 }
 void makeSeuss::writeFile()
-{
+{	cout<<"inside writeFile"<<endl;
 	ofstream outfile(newfile.c_str(), ios::out);
 	float hashfloat = (float)ht->hashcoll / (float)ht->numKeys;
 	float collfloat = (float)ht->collisions / (float)ht->numKeys;
+	// cout<<ht->hashfn<<endl;
+	// cout<<ht->collfn<<endl;
 	if (ht->hashfn && ht->collfn)
 	{
 		outfile << "Collisions using hash 1: " << hashfloat << ", and collision handling 1: " << collfloat << endl;
@@ -68,12 +70,15 @@ void makeSeuss::writeFile()
 	{
 		outfile << "Collisions using hash 2: " << hashfloat << ", and collision handling 2: " << collfloat << endl;
 	}
+	
 	outfile << endl;
 	outfile << ht->first << " ";
 	string key = "";
 	string value = ht->map[ht->getIndex(ht->first)]->getRandValue();
+	
 	int ct = 0;
 	int len = 0;
+	
 	while (ct < 500 && value != "")
 	{
 		key = value;
@@ -85,6 +90,8 @@ void makeSeuss::writeFile()
 		}
 		else
 			len++;
+			
+		if(ht->map[ht->getIndex(key)]!=NULL)
 		value = ht->map[ht->getIndex(key)]->getRandValue();
 		ct++;
 	}

@@ -21,7 +21,7 @@ hashMap::hashMap(bool hash1, bool coll1)
 	hashfn = hash1;
 	collfn = coll1;
 
-	map = new hashNode*[mapSize];
+	map = new hashNode *[mapSize];
 
 	for (int i = 0; i < mapSize; i++)
 	{
@@ -31,53 +31,44 @@ hashMap::hashMap(bool hash1, bool coll1)
 void hashMap::addKeyValue(string k, string v)
 {
 	cout << "inside addKeyValue" << endl;
+	int index = getIndex(k);
+	hashNode *nodeAtIndex = map[index];
+	if (nodeAtIndex == NULL)
+	{
+		map[index] = new hashNode(k);
+		map[index]->addValue(v);
+	}
+	else if (nodeAtIndex->keyword == k)
+	{
+		map[index]->addValue(v);
+	}
+
+	numKeys++;
+	if (((float)numKeys / (float)mapSize) > 0.7)
+		reHash();
+}
+int hashMap::getIndex(string k)
+{
 	int index = hashfn ? calcHash1(k) : calcHash2(k);
 	hashNode *nodeAtIndex = map[index];
 	int ct = 0;
-	// if(nodeAtIndex != NULL){
-	// 	cout<<"test"<<endl;
-	// 	cout<<nodeAtIndex <<endl;
-	// 	cout<<nodeAtIndex->keyword <<endl;
-	// }
 	while (true)
 	{
 		if (nodeAtIndex == NULL)
 		{
-			// cout << "here6" << endl;
-			map[index] = new hashNode(k);
-			map[index]->addValue(v);
-			break;
+			return index;
 		}
 		else if (nodeAtIndex->keyword == k)
 		{
-			// cout << "here7" << endl;
-			map[index]->addValue(v);
-			break;
+			return index;
 		}
-		if(ct == 0) hashcoll++;
+		if (ct == 0)
+			hashcoll++;
 		index = collfn ? coll1(index, ct, k) : coll2(index, ct, k);
 		nodeAtIndex = map[index];
+		collisions++;
 		ct++;
 	}
-	collisions += ct - 1;
-
-	// cout << "here5" << endl;
-	// cout << "hash index: " << index << endl;
-	// cout << "numKeys: " << numKeys<< endl;
-	// cout << "mapSize: " << mapSize << endl;
-	cout << k << ": " << v << endl;
-
-	numKeys++;
-	// cout<<"load factor"<<((float)numKeys / (float)mapSize)<<endl;
-	if (((float)numKeys / (float)mapSize) > 0.7)
-		reHash();
-	// cout << "here10" << endl;
-}
-int hashMap::getIndex(string k)
-{
-	//pass for now
-	//will come back and implement
-	return -1099;
 }
 
 int hashMap::calcHash1(string k)
@@ -119,27 +110,23 @@ void hashMap::getClosestPrime()
 }
 void hashMap::reHash()
 {
-	cout << "inside rehash" << endl;
 	int oldMapSize = mapSize;
 	hashNode **oldMap = map;
-	cout << "map size:" << mapSize << endl;
 	getClosestPrime();
 	numKeys = 0;
-	cout << "map size:" << mapSize << endl;
-	hashNode **newMap = new hashNode*[mapSize];
+	hashNode **newMap = new hashNode *[mapSize];
 	map = newMap;
 	for (int i = 0; i < mapSize; i++)
 	{
 		map[i] = NULL;
 	}
-	
+
 	for (int i = 0; i < oldMapSize; i++)
 	{
 		if (oldMap[i] != NULL)
 		{
 			for (int j = 0; j < oldMap[i]->currSize; j++)
 			{
-				cout << "test2" << endl;
 				addKeyValue(oldMap[i]->keyword, oldMap[i]->values[j]);
 			}
 		}
@@ -147,9 +134,6 @@ void hashMap::reHash()
 }
 int hashMap::coll1(int h, int i, string k)
 {
-	// cout << "inside coll1" << endl;
-	// cout << "h:"<<h << endl;
-	// cout << "i:"<<i << endl;
 	return (h + i) % mapSize;
 }
 int hashMap::coll2(int h, int i, string k)
