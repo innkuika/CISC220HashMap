@@ -33,23 +33,29 @@ void hashMap::addKeyValue(string k, string v) {
 	int index = hashfn ? calcHash1(k) :calcHash2(k);
 
 	hashNode *nodeAtIndex = map[index];
-	if(nodeAtIndex->values == NULL){
+	cout<<"here1"<<endl;
+	if(nodeAtIndex == NULL){
+		cout<<"here2"<<endl;
 		map[index] = new hashNode(k);
 		map[index]->addValue(v);
 	}
 	else if(nodeAtIndex->keyword == k){
+		cout<<"here3"<<endl;
 		map[index]->addValue(v);
 	}
 	else{
+		cout<<"here4"<<endl;
 		int ct = 0;
 		hashcoll++;
-		while(nodeAtIndex->values != NULL || nodeAtIndex->keyword != k){
+		while(nodeAtIndex->keyword != k){
 			index = collfn ? coll1(index, ct, k) : coll2(index, ct, k);
 			nodeAtIndex = map[index];
 			ct++;
+			if(nodeAtIndex == NULL) break;
 		}
 		collisions += ct - 1;
 	}
+	cout<<"here5"<<endl;
 
 	numKeys++;
 	if(numKeys/mapSize > 0.7)reHash();
@@ -92,21 +98,33 @@ void hashMap::getClosestPrime() {
 
 }
 void hashMap::reHash() {
+	cout<<"inside rehash"<<endl;
 	int oldMapSize = mapSize;
 	hashNode **oldMap = map;
+	cout<<"map size:"<<mapSize<<endl;
 	getClosestPrime();
+	cout<<"map size:"<<mapSize<<endl;
 	hashNode *newMap = new hashNode[mapSize];
+	for(int i = 0; i < mapSize; i++){
+		newMap[i].values = NULL;
+	}
 	map = & newMap;
 	for(int i = 0; i < oldMapSize; i++){
+		if(oldMap[i] != NULL){
 		for(int j = 0; j < oldMap[i]->currSize; j++){
+			cout<<"test2"<<endl;
 			addKeyValue(oldMap[i]->keyword, oldMap[i]->values[j]);
+		}
 		}
 	}
 }
 int hashMap::coll1(int h, int i, string k) {
-
+	cout<<"inside coll1"<<endl;
+	return (h + i)%mapSize;
 }
 int hashMap::coll2(int h, int i, string k) {
+	cout<<"inside coll2"<<endl;
+	return (h + i*i)%mapSize;
 }
 int hashMap::findKey(string k) {
 //NOTE: THIS METHOD CANNOT LOOP from index 0 to end of hash array looking for the key.  That destroys any efficiency in run-time. 

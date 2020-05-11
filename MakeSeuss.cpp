@@ -33,7 +33,7 @@ void makeSeuss::readFile() {
 	ht->first = key;
 
 	while (infile >> value) {          // loop getting single characters
-		//cout << key <<": " << value << endl;
+		cout << key <<": " << value << endl;
 		ht->addKeyValue(key,value);
 		key = value;
 		value = "";
