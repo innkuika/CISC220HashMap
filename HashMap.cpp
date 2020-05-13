@@ -73,6 +73,10 @@ int hashMap::getIndex(string k)
 
 int hashMap::calcHash1(string k)
 {
+	int L = k.length();
+	if(L == 1) return (int)k[0]% mapSize;
+	else if (L == 2) return ((int)k[0]% + (int)k[1])%mapSize;
+	else
 	return ((int)k[0] + (int)k[1] * 27 + (int)k[2] * 27 * 27) % mapSize;
 }
 
@@ -138,7 +142,6 @@ int hashMap::coll1(int h, int i, string k)
 }
 int hashMap::coll2(int h, int i, string k)
 {
-	cout << "inside coll2" << endl;
 	return (h + i * i) % mapSize;
 }
 int hashMap::findKey(string k)

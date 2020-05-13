@@ -90,10 +90,11 @@ void makeSeuss::writeFile()
 		}
 		else
 			len++;
-			
-		if(ht->map[ht->getIndex(key)]!=NULL)
+		cout<<key<<endl;	
+		cout<<ht->map[ht->getIndex(key)]<<endl;	
 		value = ht->map[ht->getIndex(key)]->getRandValue();
 		ct++;
+		
 	}
 	outfile.close();
 }

@@ -17,7 +17,7 @@ int main() {
 	makeSeuss k("DrSeuss.txt","Seussout.txt",true,true);
 	makeSeuss m("GEChap1a.txt","GEChap1out.txt",false,true);
 
-	// makeSeuss n("DrSeuss.txt","Seussout2.txt",true,false);
-	// makeSeuss v("GEChap1a.txt","GEChap1out2.txt",false,false);
+	makeSeuss n("DrSeuss.txt","Seussout2.txt",true,false);
+	makeSeuss v("GEChap1a.txt","GEChap1out2.txt",false,false);
 	return 0;
 }
