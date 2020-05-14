@@ -113,7 +113,9 @@ int hashMap::calcHash1(string k)
  *
  * Return: int
  *
- * This function is used to calculate the hash.
+ * In this function, we only treat first 3 characters of string as a
+ * base 27 integer (26letters+space). It allows users to address short word issue
+ * and calculate quickly.
  *
  */
 {
@@ -129,7 +131,9 @@ int hashMap::calcHash2(string k)
  *
  * Return: int
  *
- * This function is used to calculate the hash function 2.
+ * This function is used to add all the digits in the hash
+ * then mod by the array size. Then users will be able  to locate the
+ * place where they should put the data.
  */
 {
 	int h;
@@ -209,8 +213,9 @@ int hashMap::coll1(int h, int i, string k)
  *
  * Return: int
  *
- * This function is use for a probing method
- * for collisions (when index is already full)
+ * This function will make the key that hash into the cluster will be placed
+ * at the end of the cluster, it will be helpful if keys are clustered in same area
+ * NOTE: it may not works well if many keys result in the same index.
  *
  */
 {
@@ -221,8 +226,9 @@ int hashMap::coll2(int h, int i, string k)
  *
  * Return: int
  *
- * This function is use for a different method
- * for collisions (when index is already full)
+ * This function is using quadratic probing. It helps users to avoid the clustering right
+ * around the collision. It can make the data become more spread out. NOTE: it doesn't help
+ * a lot when many keys hash to the same index in the hash array.
  *
  */
 {
