@@ -116,6 +116,8 @@ int hashMap::calcHash1(string k)
  * In this function, we only treat first 3 characters of string as a
  * base 27 integer (26letters+space). It allows users to address short word issue
  * and calculate quickly.
+ * 
+ * If the word is less than 3 characters long, it takes all charaters as the input.
  *
  */
 {
@@ -132,8 +134,7 @@ int hashMap::calcHash2(string k)
  * Return: int
  *
  * This function is used to add all the digits in the hash
- * then mod by the array size. Then users will be able  to locate the
- * place where they should put the data.
+ * then mod by the array size. 
  */
 {
 	int h;
@@ -212,6 +213,9 @@ int hashMap::coll1(int h, int i, string k)
 /* Parameter: int h, int i, string k
  *
  * Return: int
+ * 
+ * This function uses linear probing to figure out the next spot to place the key 
+ * when collision happens.
  *
  * This function will make the key that hash into the cluster will be placed
  * at the end of the cluster, it will be helpful if keys are clustered in same area
@@ -258,10 +262,8 @@ int hashMap::findKey(string k)
 
 void hashMap::printMap()
 {
-	cout << "In printMap()" << endl;
 	for (int i = 0; i < mapSize; i++)
 	{
-		//cout << "In loop" << endl;
 		if (map[i] != NULL)
 		{
 			cout << map[i]->keyword << ": ";
