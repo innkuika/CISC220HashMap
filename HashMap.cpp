@@ -12,6 +12,15 @@
 using namespace std;
 
 hashMap::hashMap(bool hash1, bool coll1)
+/* Parameter: boolean hash1, boolean coll1
+ *
+ * Return: None
+ *
+ * when creating the map, make sure you
+ * initialize the values to NULL so you
+ * know whether that index has a key
+ * in it or is set to NULL.
+ */
 {
 	first = "";
 	numKeys = 0;
@@ -29,6 +38,27 @@ hashMap::hashMap(bool hash1, bool coll1)
 	}
 }
 void hashMap::addKeyValue(string k, string v)
+/* Parameter: string k, string v
+ *
+ * Return: None.
+ *
+ * adds a node  to the map at the correct index
+ * based on the key string, and then inserts the
+ * value into the value field of the hashNode
+ * Must check to see whether there's already a
+ * node at that location.  If there's nothing
+ * there(it's NULL), add the hashNode with the
+ * keyword and value. If the node has the same keyword, just add
+ * the value to the list of values.
+ * If the node has a different keyword, keep calculating a new hash index until either the
+ * keyword matches the node at that index's
+ * keyword, or until the map at that index is
+ * NULL, in which case you'll add the node there.
+ * This method also checks for load, and if the
+ * load is over 70%, it calls the reHash method
+ * to create a new longer map array and rehash the values.
+ */
+
 {
 	cout << "inside addKeyValue" << endl;
 	int index = getIndex(k);
@@ -48,6 +78,14 @@ void hashMap::addKeyValue(string k, string v)
 		reHash();
 }
 int hashMap::getIndex(string k)
+/* Parameter: string k
+ *
+ * Return: int
+ *
+ * This function is used to uses calcHash and reHash to
+ * calculate and return the index of where
+ * the keyword k should be inserted into the map array.
+ */
 {
 	int index = hashfn ? calcHash1(k) : calcHash2(k);
 	hashNode *nodeAtIndex = map[index];
@@ -72,6 +110,12 @@ int hashMap::getIndex(string k)
 }
 
 int hashMap::calcHash1(string k)
+/* Parameter: string k
+ *
+ * Return: int
+ *
+ * This function is used to calculate the hash.
+ */
 {
 	int L = k.length();
 	if(L == 1) return (int)k[0]% mapSize;
@@ -81,6 +125,12 @@ int hashMap::calcHash1(string k)
 }
 
 int hashMap::calcHash2(string k)
+/* Parameter: string k
+ *
+ * Return: int
+ *
+ * This function is used to calculate the hash function 2.
+ */
 {
 	int h;
 	int L = k.length();
@@ -103,6 +153,16 @@ bool isPrime(int n)
 	return true;
 }
 void hashMap::getClosestPrime()
+/* Parameter: None
+ *
+ * Return: None
+ *
+ * This function is using a binary search and an
+ * array of primes to find the closest prime to
+ * double the map Size, and then set mapSize to
+ * that new prime - you can find the prime in
+ * another way if you choose.
+ */
 {
 	mapSize *= 2;
 	while (true)
@@ -113,6 +173,14 @@ void hashMap::getClosestPrime()
 	}
 }
 void hashMap::reHash()
+/* Parameter: None
+ *
+ * Return: None
+ *
+ * This function is use to resize the Hash, if the
+ * size of array is at 70%, then it will double array size
+ * and rehash keys.
+ */
 {
 	int oldMapSize = mapSize;
 	hashNode **oldMap = map;
@@ -137,14 +205,38 @@ void hashMap::reHash()
 	}
 }
 int hashMap::coll1(int h, int i, string k)
+/* Parameter: int h, int i, string k
+ *
+ * Return: int
+ *
+ * This function is use for a probing method
+ * for collisions (when index is already full)
+ *
+ */
 {
 	return (h + i) % mapSize;
 }
 int hashMap::coll2(int h, int i, string k)
+/* Parameter: int h, int i, string k
+ *
+ * Return: int
+ *
+ * This function is use for a different method
+ * for collisions (when index is already full)
+ *
+ */
 {
 	return (h + i * i) % mapSize;
 }
 int hashMap::findKey(string k)
+/* Parameter: string k
+ *
+ * Return: int
+ *
+ * This function is use for finds the key in the array and
+ * returns its index.  If it's not in the array, returns -1.
+ *
+ */
 {
 	//NOTE: THIS METHOD CANNOT LOOP from index 0 to end of hash array looking for the key.  That destroys any efficiency in run-time.
 	int index = hashfn ? calcHash1(k) : calcHash2(k);
