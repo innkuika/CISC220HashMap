@@ -60,7 +60,6 @@ void hashMap::addKeyValue(string k, string v)
  */
 
 {
-	cout << "inside addKeyValue" << endl;
 	int index = getIndex(k);
 	hashNode *nodeAtIndex = map[index];
 	if (nodeAtIndex == NULL)
@@ -115,6 +114,7 @@ int hashMap::calcHash1(string k)
  * Return: int
  *
  * This function is used to calculate the hash.
+ *
  */
 {
 	int L = k.length();

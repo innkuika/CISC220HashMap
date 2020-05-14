@@ -48,12 +48,10 @@ void makeSeuss::readFile()
 	ht->printMap();
 }
 void makeSeuss::writeFile()
-{	cout<<"inside writeFile"<<endl;
+{	
 	ofstream outfile(newfile.c_str(), ios::out);
 	float hashfloat = (float)ht->hashcoll / (float)ht->numKeys;
 	float collfloat = (float)ht->collisions / (float)ht->numKeys;
-	// cout<<ht->hashfn<<endl;
-	// cout<<ht->collfn<<endl;
 	if (ht->hashfn && ht->collfn)
 	{
 		outfile << "Collisions using hash 1: " << hashfloat << ", and collision handling 1: " << collfloat << endl;
@@ -90,8 +88,6 @@ void makeSeuss::writeFile()
 		}
 		else
 			len++;
-		cout<<key<<endl;	
-		cout<<ht->map[ht->getIndex(key)]<<endl;	
 		value = ht->map[ht->getIndex(key)]->getRandValue();
 		ct++;
 		
